@@ -13,40 +13,40 @@
  * ---------------------------------------------------------------------------
  * This class uses the following STD classes:
  */
+#ifndef ACTION_FACTORY_H
+#define ACTION_FACTORY_H
 
-#include "actionfactory.h"
-#include "borrow.h"
-#include "return.h"
-#include "inventory.h"
-#include "history.h"
+#include "action.h"
 
-/**
- * This is a factory method that receives a ActionTypes that determines
- * the type of object the driver wants to receive. The factory method 
- * uses a switch case to determine which object to return
- * 
- * @param ActionTypes: this is the type of Action that the driver
- *                    wants to receive
- *                
- * @return Action: the return object is an object derived from the
- *                 Action class
- */
-Action* ActionFactory::createAction(ActionTypes at)
+class ActionFactory
 {
-	switch(at)
-	{
-		case ActionTypes::Borrow:
-			return new Borrow;
+public:
 
-		case ActionTypes::Return:
-			return new Return;
+	/**
+	 * This is an enum with the types of Action objects available in the
+	 * factory method. The ActionTypes will be used by the driver to pass
+	 * the type of Action for the factory method to return and this member
+	 * will also be used in the factory method switch case
+	 */
+	enum class ActionTypes {
+		Borrow,
+		Return,
+		Inventory,
+		History
+	};
 
-		case ActionTypes::Inventory:
-			return new Inventory;
+	/**
+	 * This is a factory method that receives a ActionTypes that determines
+	 * the type of object the driver wants to receive. The factory method 
+	 * uses a switch case to determine which object to return
+	 * 
+	 * @param ActionTypes: this is the type of Action that the driver
+	 *                    wants to receive
+	 *                
+	 * @return Action: the return object is an object derived from the
+	 *                 Action class
+	 */
+	static Action* createAction(ActionTypes at);
+};
 
-		case ActionTypes::History:
-			return new History;
-	}
-
-	return nullptr;
-}
+#endif
